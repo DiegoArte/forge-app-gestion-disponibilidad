@@ -1,0 +1,74 @@
+modules:
+  jira:globalPage:
+    - key: residenciapp2-hello-world-page
+      resource: main
+      resolver:
+        function: resolver
+      title: "Agentes"
+      icon: "https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/users.svg"
+  trigger:
+    - key: issue-created-auto-assign-trigger
+      function: issue-created-function 
+      events:
+        - avi:jira:created:issue
+    - key: worklog-updated-cost-trigger
+      function: worklog-updated-fun
+      events:
+        - avi:jira:created:worklog 
+        - avi:jira:updated:worklog 
+  function:
+    - key: resolver
+      handler: index.handler
+    - key: issue-created-function
+      handler: triggers.issueCreatedHandler
+    - key: worklog-updated-fun
+      handler: triggers.worklogUpdatedHandler
+resources:
+  - key: main
+    path: static/hello-world/build
+permissions:
+  scopes:
+    - read:jira-work
+    - 'write:jira-work'
+    - read:jira-user
+    - storage:app
+    - 'read:jql:jira'
+    - 'validate:jql:jira'
+    - 'read:issue:jira'
+    - 'read:user:jira'
+    - 'read:servicedesk-request'
+    - 'manage:jira-configuration'
+    - 'read:queue:jira-service-management'
+    - 'read:request:jira-service-management'
+    - 'read:request.participant:jira-service-management'
+    - 'read:request.status:jira-service-management'
+    - 'read:application-role:jira'
+    - 'read:filter:jira'
+    - 'read:license:jira'
+    - 'read:issue-meta:jira'
+    - 'read:field:jira'
+    - 'read:issue-link:jira'
+    - 'read:issue.property:jira'
+    - 'read:resolution:jira'
+    - 'read:issue-details:jira'
+    - 'read:issue-security-scheme:jira'
+    - 'read:issue-type:jira'
+    - 'read:issue-type-scheme:jira'
+    - 'read:issue-type.property:jira'
+    - 'read:issue.watcher:jira'
+    - 'read:issue-field-values:jira'
+    - 'read:issue-security-level:jira'
+    - 'read:issue-status:jira'
+    - 'read:permission:jira'
+    - 'read:permission-scheme:jira'
+    - 'read:project.property:jira'
+    - 'read:project.component:jira'
+    - 'read:project-role:jira'
+    - 'read:project.component:jira'
+    - 'read:project.component:jira'
+app:
+  runtime:
+    name: nodejs22.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/9207f3b9-bb37-4299-a944-27e1590848cc
